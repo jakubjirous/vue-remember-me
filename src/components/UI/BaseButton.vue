@@ -1,5 +1,5 @@
 <template>
-  <button :class="mode" :type="type">
+  <button :class="mode">
     <slot></slot>
   </button>
 </template>
@@ -8,11 +8,6 @@
 export default {
   name: 'BaseButton',
   props: {
-    type: {
-      type: String,
-      required: false,
-      default: 'text',
-    },
     mode: {
       type: String,
       required: false,
@@ -30,6 +25,7 @@ button {
   border: 1px solid #3a0061;
   color: white;
   cursor: pointer;
+  outline: none;
 }
 
 button:hover,
@@ -41,11 +37,12 @@ button:active {
 .flat {
   background-color: transparent;
   color: #3a0061;
-  border: none;
+  border: 1px solid transparent;
 }
 
 .flat:hover,
 .flat:active {
   background-color: #edd2ff;
+  border: 1px solid #edd2ff;
 }
 </style>
