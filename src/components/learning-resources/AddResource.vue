@@ -20,19 +20,41 @@
       </div>
     </form>
   </base-card>
-
+  <base-dialog v-if="inputIsInvalid" title="Invalid Input" @close="onDialogClose">
+    <template #default>
+      <p>Unfortunately, at least one input value is invalid.</p>
+      <p>Please check all inputs and make sure ou enter at least a few characters into each input field.</p>
+    </template>
+    <template #actions>
+      <base-button @click="onDialogClose">Okay</base-button>
+    </template>
+  </base-dialog>
 </template>
 
 <script>
 export default {
   name: 'AddResource',
   inject: ['addResource'],
+  data() {
+    return {
+      inputIsInvalid: false,
+    };
+  },
   methods: {
     onSubmit() {
       const enteredTitle = this.$refs.titleInput.value;
       const enteredDesc = this.$refs.descInput.value;
       const enteredUrl = this.$refs.linkInput.value;
+
+      if (enteredTitle.trim() === '' || enteredDesc.trim() === '' || enteredUrl.trim() === '') {
+        this.inputIsInvalid = true;
+        return;
+      }
+
       this.addResource(enteredTitle, enteredDesc, enteredUrl);
+    },
+    onDialogClose() {
+      this.inputIsInvalid = false;
     },
   },
 };
